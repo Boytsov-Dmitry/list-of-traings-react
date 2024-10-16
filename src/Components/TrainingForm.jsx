@@ -1,29 +1,47 @@
-import TrainingList from './TariningList'
+import React, { useState } from 'react';
 
-export default function TrainingForm() {
-    const handleSumbit = evt => {
-        evt.preventDefault();
-        
-        const { target } = evt;
-        <TrainingList item={target} />
-        // const elements = [...target.elements]
-        // console.log(elements[0].value)
-        // console.log(target[0].value)
-    }
-
-    return(
-        <form className='trainingForm' onSubmit={handleSumbit}>
-            <div className="dataTrainingFormContainer">
-                <label className="dataTrainingFormTitel">Дата (ДД.ММ.ГГ)</label>
-                <input type='date' className="dataTrainingFormInput"/>
-            </div>
-            <div className="distanceTrainingFormContainer">
-                <label className="distanceTrainingFormTitel">Пройдено км.</label>
-                <input type='number' className="distanceTrainingFormInput"/>
-            </div>
-            <div className="buttonTrainingFormContainer">
-                <button type='submit' className="buttonTrainingFormInput">Ok</button>
-            </div>
-        </form>
-    )
-}
+export default function TrainingForm({ onTrainingSubmit }) {
+    const [date, setDate] = useState('');
+    const [distance, setDistance] = useState('');
+  
+    const handleSumbit = (evt) => {
+      evt.preventDefault();
+  
+      const { target } = evt;
+      const formData = new FormData(target);
+      const submittedDate = formData.get('date');
+      const submittedDistance = formData.get('distance');
+  
+      onTrainingSubmit({ dateOfTaining: submittedDate, distanceOfTraining: submittedDistance });
+    };
+  
+    return (
+      <form className='trainingForm' onSubmit={handleSumbit}>
+        <div className="dataTrainingFormContainer">
+          <label className="dataTrainingFormTitel">Дата (ДД.ММ.ГГ)</label>
+          <input
+            type='date'
+            className="dataTrainingFormInput"
+            value={date}
+            onChange={(e) => setDate(e.target.value)}
+            name="date"
+          />
+        </div>
+        <div className="distanceTrainingFormContainer">
+          <label className="distanceTrainingFormTitel">Пройдено км.</label>
+          <input
+            type='number'
+            className="distanceTrainingFormInput"
+            value={distance}
+            onChange={(e) => setDistance(e.target.value)}
+            name="distance"
+          />
+        </div>
+        <div className="buttonTrainingFormContainer">
+          <button type='click' className="buttonTrainingFormInput">
+            Ok
+          </button>
+        </div>
+      </form>
+    );
+  }

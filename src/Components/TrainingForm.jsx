@@ -5,6 +5,7 @@ export default function TrainingForm({ onTrainingSubmit }) {
     const [distance, setDistance] = useState('');
   
     const handleSumbit = (evt) => {
+      
       evt.preventDefault();
   
       const { target } = evt;
@@ -44,4 +45,4 @@ export default function TrainingForm({ onTrainingSubmit }) {
         </div>
       </form>
     );
-  }
+};

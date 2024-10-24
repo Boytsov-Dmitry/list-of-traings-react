@@ -1,19 +1,17 @@
-import React, { useState, useEffect } from 'react';
+import { v4 as uuidv4 } from 'uuid'
 
-export default function TrainingListForm({ data, distance }) {
-    // const [list, setList] = useState([]);
-
-    // useEffect(() => {
-    //   setList([...list, { data, distance }]);
-    // }, [data, distance]);
-
-    return(
-        <form className='trainingListForm'>
-            <div className='trainingListFormData'>{data}</div>
-            <div className='trainingListFormDistance'>{distance}</div>
+export default function TrainingListForm({ listOfTraining }) {
+    const mappingListOfTraining = listOfTraining.map(training =>   
+        <li className='trainingListForm' key={uuidv4()}>
+            <div className='trainingListFormData'>{training.dateOfTaining}</div>
+            <div className='trainingListFormDistance'>{training.distanceOfTraining}</div>
             <div className='trainingListFormButtonContainer'>
                 <button className='trainingListFormButton'>X</button>
             </div>
-        </form>
+        </li>
+    );
+
+    return(
+        <ul>{mappingListOfTraining}</ul>
     )
-}
+};

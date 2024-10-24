@@ -8,6 +8,10 @@ import TrainingListForm from './Components/TariningListForm'
 function App() {
   const [list, setList] = useState([]); 
 
+  const handleDelete = (index) => {
+    setList(list.filter((_, i) => i !== index));
+  };
+
   const handleTrainingSubmit = (data) => {
 
     const sameTraining = list.findIndex(item => item.dateOfTaining === data.dateOfTaining);
@@ -19,19 +23,21 @@ function App() {
         setList([...list, data]);
       };
 
-      list.forEach(item => {
-        if(item.dateOfTaining < data.dateOfTaining) {
-          setList([data, ...list]);
-        };
-      });
+      if (sameTraining === -1) {
+        list.forEach(item => {
+          if(item.dateOfTaining < data.dateOfTaining) {
+            setList([data, ...list]);
+          };
+        });
+      }
   };
 
   return (
     <>
-      <TrainingForm onTrainingSubmit={handleTrainingSubmit}/>
+      <TrainingForm onTrainingSubmit={handleTrainingSubmit} />
       <div className="container">
         <div className="trainigList">
-          <TrainingListForm listOfTraining={list}/>
+          <TrainingListForm listOfTraining={list} onDelete={handleDelete} />
         </div>
       </div>
     </>
